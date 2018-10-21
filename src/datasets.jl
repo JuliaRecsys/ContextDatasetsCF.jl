@@ -1,4 +1,3 @@
-
 function Frappe()::Persa.Dataset
 	dataFile = "$(defdir)/frappe/frappe.csv"
 	metaFile = "$(defdir)/frappe/meta.csv"

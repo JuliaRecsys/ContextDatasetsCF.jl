@@ -5,11 +5,6 @@ using DataFrames
 using BinDeps
 using CSV
 
-
-function greet()
-    print("funciono")
-end
-
 include("datasets.jl")
 
 end # module

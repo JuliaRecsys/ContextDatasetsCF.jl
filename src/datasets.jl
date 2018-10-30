@@ -1,6 +1,7 @@
+const defdir = joinpath(dirname(@__FILE__), "..", "datasets")
+
 function Frappe()::Persa.Dataset
-	dataFile = "$(defdir)/frappe/frappe.csv"
-	metaFile = "$(defdir)/frappe/meta.csv"
+	(dataFile,metaFile) = getFrappe()
 
 	if !isfile(dataFile) && !isfile(metaFile)
 		throw(ArgumentError("Dataset not found, get it on https://github.com/irecsys/CARSKit/blob/master/context-aware_data_sets/Mobile_Frappe.zip"))
@@ -8,21 +9,27 @@ function Frappe()::Persa.Dataset
 
 	data = CSV.read(dataFile, delim = '\t',
 	                      header = [:user, :item, :cnt, :daytime, :weekday, :isweekend, :homework, :cost, :weather, :country, :city],
-	                      allowmissing = :none)
+	                      allowmissing = :auto,
+						  missingstrings = "unknown",
+						  skipto = 2,
+						  decimal = '.',
+						  types = [
+						  			Int,Int,
+					  		  		Int,Union{String,Missing},
+								  	Union{String,Missing},Union{String,Missing},
+								  	Union{String,Missing},Union{String,Missing},
+								  	Union{String,Missing},Union{String,Missing},
+								  	Int
+								],
+						  strict=true)
 	meta= CSV.read(metaFile, delim = '\t',
-					header= [:item,:package, :category,:downloads,:developer,:icon,:language,:description, :name, :price, :rating, :short_desc])
+					header= [:item,:package, :category,:downloads,:developer,:icon,:language,:description, :name, :price, :rating, :short_desc],
+					missingstrings = "unknown",
+					strict=true)
 
 	final = join(data,meta, on = :item)
 
-	deleterows!(final,1)
-
-	final[:user] = parse.(Int,final[:user])
-	final[:item] = parse.(Int,final[:item])
-	#final[:rating] = parse.(Int,final[:rating])
-
-	##print(findfirst( x -> x[11] == "unknown", final))
-
-	return DatasetContext(final)
+	return ContextCF.DatasetContext(final)
 end
 
 

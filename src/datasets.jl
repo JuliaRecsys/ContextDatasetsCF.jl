@@ -22,12 +22,21 @@ function Frappe()::Persa.Dataset
 								  	Int
 								],
 						  strict=true)
-	meta= CSV.read(metaFile, delim = '\t',
-					header= [:item,:package, :category,:downloads,:developer,:icon,:language,:description, :name, :price, :rating, :short_desc],
+
+  	meta = CSV.read(metaFile, delim = '\t',
+					header = [:item,:package, :category,:downloads,:developer,:icon,:language,:description, :name, :price, :rating, :short_desc],
+					skipto = 2,
+					types=[Int,Union{String,Missing},Union{String,Missing},Union{String,Missing},Union{String,Missing},Union{String,Missing},Union{String,Missing},Union{String,Missing},Union{String,Missing},Union{String,Missing},Union{Missing,Float64},Union{String,Missing}],
 					missingstrings = "unknown",
 					strict=true)
 
+	##remove as linhas com rating missing
+	deleterows!(meta,findall(ismissing, meta[:rating]))
+
 	final = join(data,meta, on = :item)
+
+	## converte de volta de Union{Missing,Float64} pra Float64
+	final[:rating] = convert.(Float64,final[:rating])
 
 	return ContextCF.DatasetContext(final)
 end
@@ -40,7 +49,7 @@ function createDummyContextDataset()
     df[:user] = [1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7]
     df[:item] = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 4, 5, 6, 2, 4, 5]
     df[:rating] = [2, 7, 3, 3, 8, 3, 3, 3, 1, 9, 3, 3, 2, 3, 10, 4, 3, 3, 4, 2, 4, 3, 4, 2, 3, 2, 3, 3, 4, 5, 9, 10, 7, 6, 8]
-	df[:isWeekend] = [true,false,true,true,false,true,false,true,false,false,true,false,true,true,false,true,false,true,false,false,true,false,true,true,false,true,false,true,false,false,true,false,false,false,true]
+	df[:isWeekend] = [true,false,true,missing,false,true,false,missing,false,false,true,false,true,missing,false,true,missing,true,false,false,true,false,true,true,false,true,false,true,false,false,true,false,false,false,true]
 	df[:notWeekend] = map(x -> !x,df[:isWeekend])
 
     return df

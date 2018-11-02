@@ -12,3 +12,19 @@ function getFrappe()
 
 	(dataFile,metaFile)
 end
+
+function getMovielens100k()
+	file = "$(defdir)/ml-100k/u.data"
+
+	isfile(file) || getDataset("http://files.grouplens.org/datasets/movielens/ml-100k.zip")
+
+	(file)
+end
+
+function getMovielens1m()
+    file = "$(defdir)/ml-1m/ratings.dat"
+
+	isfile(file) || getDataset("http://files.grouplens.org/datasets/movielens/ml-1m.zip")
+
+	(file)
+end

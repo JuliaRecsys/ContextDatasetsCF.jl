@@ -4,13 +4,12 @@ function getDataset(url)
 	run(unpack_cmd(path,defdir,".zip", ""))
 end
 
-function getFrappe()
-	dataFile = "$(defdir)/Mobile_Frappe/frappe/frappe.csv"
-	metaFile = "$(defdir)/Mobile_Frappe/frappe/meta.csv"
+function getInCarMusic()
+	file = "$(defdir)/Music_InCarMusic/Data_InCarMusic.xlsx"
 
-	isfile(dataFile) && isfile(metaFile) || getDataset("https://github.com/irecsys/CARSKit/blob/master/context-aware_data_sets/Mobile_Frappe.zip?raw=true")
+	isfile(file) || getDataset("https://github.com/irecsys/CARSKit/blob/master/context-aware_data_sets/Music_InCarMusic.zip?raw=true")
 
-	(dataFile,metaFile)
+	(file)
 end
 
 function getMovielens100k()
@@ -25,6 +24,14 @@ function getMovielens1m()
     file = "$(defdir)/ml-1m/ratings.dat"
 
 	isfile(file) || getDataset("http://files.grouplens.org/datasets/movielens/ml-1m.zip")
+
+	(file)
+end
+
+function getTripAdvisorV2()
+    file = "$(defdir)/Travel_TripAdvisor_v2/Data_TripAdvisor_v2.csv"
+
+	isfile(file) || getDataset("https://github.com/irecsys/CARSKit/blob/master/context-aware_data_sets/Travel_TripAdvisor_v2.zip?raw=true")
 
 	(file)
 end

@@ -4,6 +4,29 @@ const defdir = joinpath(dirname(@__FILE__), "..", "datasets")
 # TripAdvisor v1, v2
 # Movielens
 
+function InCarMusic()
+	filename = getInCarMusic()
+
+	file = CSV.read(filename, delim= ",", missingstring="NA")
+
+	ContextCF.DatasetContext(file)
+end
+
+function TripAdvisorV2()
+	filename = getTripAdvisorV2()
+
+	file = CSV.read(filename, delim= ',', types=[ String, Int, Int,String,String,String,String,String,String],allowmissing=:none)
+
+	CSV.rename!(file,:UserID => :user, :Rating => :rating, :ItemID => :item)
+
+	file[:item] = labelencode(labelmap(file[:item]), file[:item])
+	file[:user] = labelencode(labelmap(file[:user]), file[:user])
+
+	return file
+	# ContextCF.DatasetContext(file)
+end
+
+
 
 function MovieLens()::ContextCF.DatasetContext
 	filename = getMovielens100k()
@@ -23,7 +46,7 @@ function MovieLens1m()::ContextDatasetsCF.DatasetContext
 						  types = [Int,Int,Int,timestamp],
 	                      allowmissing = :none)
 
-	return ContextDatasetsCF.DatasetContext(file)
+	return ContextCF.DatasetContext(file)
 end
 
 

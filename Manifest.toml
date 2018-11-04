@@ -73,6 +73,12 @@ uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 deps = ["LinearAlgebra", "Random", "Serialization", "Sockets"]
 uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
+[[EzXML]]
+deps = ["BinaryProvider", "Libdl", "Printf", "Test"]
+git-tree-sha1 = "5623d1486bfaadd815f5c4ca501adda02b5337f1"
+uuid = "8f5d6c58-4d21-5cfd-889c-e3ad7ee6a615"
+version = "0.9.0"
+
 [[FileWatching]]
 uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
 
@@ -142,15 +148,15 @@ version = "1.0.2"
 
 [[Parsers]]
 deps = ["Dates", "Mmap", "Test", "WeakRefStrings"]
-git-tree-sha1 = "1f4ab004d02b98ba8fd6a05faa7529fce7b4e066"
+git-tree-sha1 = "510eba237a97dfb73f8a0c16ed23f68e407885c1"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-version = "0.2.10"
+version = "0.2.11"
 
 [[Persa]]
 deps = ["DataFrames", "SparseArrays", "Statistics", "Test"]
-git-tree-sha1 = "eb7d5c17f5157eef230051615330b92e4b8eb3c5"
+git-tree-sha1 = "5eaf3e1e6ee2f5694c39d63669b96cc000c7f163"
 uuid = "86800b63-3017-5277-aca5-15d7d6a5f2b2"
-version = "0.1.0"
+version = "0.1.1"
 
 [[Pkg]]
 deps = ["Dates", "LibGit2", "Markdown", "Printf", "REPL", "Random", "SHA", "UUIDs"]
@@ -263,3 +269,15 @@ deps = ["Missings", "Random", "Test"]
 git-tree-sha1 = "1087e8be380f2c8b96434b02bb1150fc1c511135"
 uuid = "ea10d353-3f73-51f8-a26c-33c1cb351aa5"
 version = "0.5.3"
+
+[[XLSX]]
+deps = ["Dates", "EzXML", "Printf", "Test", "ZipFile"]
+git-tree-sha1 = "6f2ed61ba8309077e646585ddee069af0c23122f"
+uuid = "fdbf4ff8-1666-58a4-91e7-1b58723a45e0"
+version = "0.4.2"
+
+[[ZipFile]]
+deps = ["Printf", "Test"]
+git-tree-sha1 = "c191e56c849b1784cacbf7cd5e52cc672f1ae2db"
+uuid = "a5390f91-8eb1-5f08-bee0-b1d1ffed6cea"
+version = "0.7.0"

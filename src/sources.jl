@@ -35,3 +35,11 @@ function getTripAdvisorV2()
 
 	(file)
 end
+
+function getTripAdvisorV1()
+    file = "$(defdir)/Travel_TripAdvisor_v1/Data_TripAdvisor_v1.xls"
+
+	isfile(file) || getDataset("https://github.com/irecsys/CARSKit/blob/master/context-aware_data_sets/Travel_TripAdvisor_v1.zip?raw=true")
+
+	(file)
+end

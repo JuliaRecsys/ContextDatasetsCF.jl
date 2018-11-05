@@ -6,6 +6,12 @@ const defdir = joinpath(dirname(@__FILE__), "..", "datasets")
 # Movielens 100k DONE
 # Movielens 1m DONE
 
+"""
+    InCar()::ContextCF.DatasetContext
+
+Return InCarMusic Dataset with Contextual Data.
+"""
+
 function InCarMusic()
 	filename = getInCarMusic()
 
@@ -28,6 +34,13 @@ function InCarMusic()
 	##ContextCF.DatasetContext(dataset)
 end
 
+
+"""
+    TripAdvisorV2()::ContextCF.DatasetContext
+
+Return TripAdvisorV2 Dataset with Contextual Data.
+"""
+
 function TripAdvisorV2()
 	filename = getTripAdvisorV2()
 
@@ -42,6 +55,12 @@ function TripAdvisorV2()
 	# ContextCF.DatasetContext(file)
 end
 
+"""
+    MovieLens()::ContextCF.DatasetContext
+
+Return MovieLens 100k dataset.
+"""
+
 function MovieLens()::ContextCF.DatasetContext
 	filename = getMovielens100k()
 
@@ -51,6 +70,12 @@ function MovieLens()::ContextCF.DatasetContext
 
 	return ContextCF.DatasetContext(file)
 end
+
+"""
+    MovieLens1m()::ContextCF.DatasetContext
+
+Return MovieLens 1m dataset.
+"""
 
 function MovieLens1m()::ContextCF.DatasetContext
 	filename = getMovielens1m()
@@ -66,9 +91,13 @@ function MovieLens1m()::ContextCF.DatasetContext
 end
 
 
+"""
+    dummyDataset()::ContextCF.DatasetContext
 
+Returns a dummy context dataset for quick testing.
+"""
 ##Gera um dataset dummy com informações de contexto
-function createDummyContextDataset()
+function dummyDataset()
     df = DataFrame()
     df[:user] = [1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7]
     df[:item] = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 4, 5, 6, 2, 4, 5]
@@ -76,5 +105,5 @@ function createDummyContextDataset()
 	df[:isWeekend] = [true,false,true,missing,false,missing,false,missing,false,false,true,false,true,missing,false,true,missing,true,false,false,missing,false,true,true,false,true,false,true,false,false,true,false,false,false,missing]
 	df[:notWeekend] = map(x -> !x,df[:isWeekend])
 
-    return df
+    return ContextCF.DatasetContext(df)
 end

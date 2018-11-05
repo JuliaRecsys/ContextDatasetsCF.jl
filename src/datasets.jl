@@ -58,7 +58,19 @@ end
 """
     MovieLens()::ContextCF.DatasetContext
 
-Return MovieLens 100k dataset.
+Return MovieLens 100k Dataset with Contextual Data.
+
+# Example:
+
+julia> dataset = ContextDatasetsCF.MovieLens()
+Context Aware Collaborative Filtering Dataset
+- users: 943
+- items: 1682
+- ratings: 100000
+- contexts: 1
+- contextColumns: ["timestamp"]
+
+Ratings Preference: [1, 2, 3, 4, 5]
 """
 
 function MovieLens()::ContextCF.DatasetContext
@@ -74,7 +86,19 @@ end
 """
     MovieLens1m()::ContextCF.DatasetContext
 
-Return MovieLens 1m dataset.
+Return MovieLens 1m Dataset with Contextual Data.
+
+# Example:
+
+julia> dataset = ContextDatasetsCF.MovieLens1m()
+Context Aware Collaborative Filtering Dataset
+- users: 6040
+- items: 3706
+- ratings: 1000209
+- contexts: 1
+- contextColumns: ["timestamp"]
+
+Ratings Preference: [1, 2, 3, 4, 5]
 """
 
 function MovieLens1m()::ContextCF.DatasetContext
@@ -94,7 +118,18 @@ end
 """
     dummyDataset()::ContextCF.DatasetContext
 
-Returns a dummy context dataset for quick testing.
+Returns a dummy Dataset with Contextual Data for quick testing.
+
+# Example:
+julia> dataset = ContextDatasetsCF.dummyDataset()
+Context Aware Collaborative Filtering Dataset
+- users: 7
+- items: 6
+- ratings: 35
+- contexts: 2
+- contextColumns: ["isWeekend", "notWeekend"]
+
+
 """
 ##Gera um dataset dummy com informações de contexto
 function dummyDataset()
@@ -104,6 +139,6 @@ function dummyDataset()
     df[:rating] = [2, 7, 3, 3, 8, 3, 3, 4, 1, 9, 3, 3, 2, 3, 10, 4, 3, 3, 4, 2, 4, 3, 4, 2, 3, 2, 3, 3, 4, 5, 9, 10, 7, 6, 8]
 	df[:isWeekend] = [true,false,true,missing,false,missing,false,missing,false,false,true,false,true,missing,false,true,missing,true,false,false,missing,false,true,true,false,true,false,true,false,false,true,false,false,false,missing]
 	df[:notWeekend] = map(x -> !x,df[:isWeekend])
-
-    return ContextCF.DatasetContext(df)
+	df
+    # return ContextCF.DatasetContext(df)
 end

@@ -7,7 +7,7 @@ const defdir = joinpath(dirname(@__FILE__), "..", "datasets")
 # Movielens 1m DONE
 
 """
-    InCar()::ContextCF.DatasetContext
+    InCarMusic()::ContextCF.DatasetContext
 
 Return InCarMusic Dataset with Contextual Data.
 """
@@ -30,8 +30,7 @@ function InCarMusic()
 	dataset[:item] = convert(Array{Int}, dataset[:item])
 	dataset[:rating] = convert(Array{Int}, dataset[:rating])
 
-	return dataset
-	##ContextCF.DatasetContext(dataset)
+	return ContextCF.DatasetContext(unique(dataset,[:item,:user]))
 end
 
 
@@ -51,8 +50,7 @@ function TripAdvisorV2()
 	file[:item] = labelencode(labelmap(file[:item]), file[:item])
 	file[:user] = labelencode(labelmap(file[:user]), file[:user])
 
-	return file
-	# ContextCF.DatasetContext(file)
+	return ContextCF.DatasetContext(unique(file,[:item,:user]))
 end
 
 """
@@ -73,7 +71,7 @@ Context Aware Collaborative Filtering Dataset
 Ratings Preference: [1, 2, 3, 4, 5]
 """
 
-function MovieLens()::ContextCF.DatasetContext
+function MovieLens()
 	filename = getMovielens100k()
 
 	file = CSV.read(filename, delim = '	',
@@ -101,7 +99,7 @@ Context Aware Collaborative Filtering Dataset
 Ratings Preference: [1, 2, 3, 4, 5]
 """
 
-function MovieLens1m()::ContextCF.DatasetContext
+function MovieLens1m()
 	filename = getMovielens1m()
 
 	file = CSV.read(filename, delim = "::",
@@ -111,7 +109,8 @@ function MovieLens1m()::ContextCF.DatasetContext
 
 	file[:item] = labelencode(labelmap(file[:item]), file[:item])
 
-	return ContextCF.DatasetContext(file)
+	return file
+	# return ContextCF.DatasetContext(file)
 end
 
 

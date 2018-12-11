@@ -7,10 +7,14 @@ julia:
   - nightly
 notifications:
   email: false
+
+before_script:
+  - julia -e 'import Pkg; Pkg.clone("https://github.com/JuliaRecsys/ContextCF.jl/");'
+
 # uncomment the following lines to override the default test script
 #script:
 #  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-#  - julia -e 'Pkg.clone(pwd()); Pkg.build("ContextDatasetsCF"); Pkg.test("ContextDatasetsCF"; coverage=true)'
+#  - julia -e 'Pkg.clone(pwd()); Pkg.build("ContextDatasetsCF"); Pkg.test("ContextDatasetsCF"; coverage=true)
 after_success:
   - julia -e 'import Pkg; ps=Pkg.PackageSpec(name="Documenter", version="0.19"); Pkg.add(ps); Pkg.pin(ps)'
   - julia -e 'import Pkg; cd(Pkg.dir("ContextDatasetsCF")); include(joinpath("docs", "make.jl"))'

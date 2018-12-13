@@ -109,8 +109,7 @@ function MovieLens1m()
 
 	file[:item] = labelencode(labelmap(file[:item]), file[:item])
 
-	return file
-	# return ContextCF.DatasetContext(file)
+	return ContextCF.DatasetContext(file)
 end
 
 
